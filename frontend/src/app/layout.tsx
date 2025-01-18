@@ -17,10 +17,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>
+      <body className="min-h-full">
         <TRPCReactProvider>
-          <Navbar />
-          {children}
+          <div className="min-h-full flex flex-col">
+            <Navbar />
+            {children}
+          </div>
         </TRPCReactProvider>
       </body>
     </html>
