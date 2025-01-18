@@ -26,7 +26,7 @@ export function Report({ report }: ReportProps) {
     const name = report.query.split(',')[0];
 
     return (
-        <div className="w-full max-w-4xl mx-auto space-y-8 p-6">
+        <div className="w-full max-w-4xl mx-auto space-y-2 p-4">
             {/* Header Section */}
             <div className="space-y-4">
                 <div className="flex items-start justify-between">

@@ -16,10 +16,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable}`}>
-      <body className="min-h-full">
+    <html lang="en" className={`h-full ${GeistSans.variable}`}>
+      <body className="h-full">
         <TRPCReactProvider>
-          <div className="min-h-full flex flex-col">
+          <div className="flex flex-col h-full">
             <Navbar />
             {children}
           </div>
