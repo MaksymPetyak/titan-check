@@ -1,49 +1,32 @@
-import smtplib
 import dns.resolver
-import socket
-from typing import Dict, Any, Set
+from typing import Dict, Set
 
 class EmailCheckService:
-    def __init__(self, sender_email: str = 'mail@benjaminwolba.com'):
-        self.sender_email = sender_email
+    def __init__(self):
         self._private_domains = self._get_private_domains()
         self._disposable_domains = self._get_disposable_domains()
 
     def verify_email(self, email_address: str) -> bool:
         """
-        Verify if an email address exists and can receive emails
+        Basic email validation and DNS check
         
         Args:
             email_address: Email address to verify
             
         Returns:
-            bool: True if email exists and can receive messages
+            bool: True if email domain exists and has MX records
         """
-        try: 
-            # Step 1: Extract domain
+        try:
+            # Extract domain
             domain = email_address.split('@')[1]
 
-            # Step 2: Get MX records
+            # Check MX records
             try:
                 mx_records = dns.resolver.resolve(domain, 'MX')
-                mx_record = sorted(mx_records, key=lambda r: r.preference)[0].exchange.to_text()
+                return len(mx_records) > 0
             except Exception as e:
                 print(f"MX record lookup failed: {e}")
                 return False
-
-            # Step 3: SMTP connection
-            smtp = smtplib.SMTP()
-            smtp.set_debuglevel(0)
-            smtp.connect(mx_record)
-            smtp.helo(socket.gethostname())
-            smtp.mail(self.sender_email)
-
-            # Step 4: Verify recipient
-            code, message = smtp.rcpt(email_address)
-            smtp.quit()
-
-            # Step 5: Return result
-            return code == 250
 
         except Exception as e:
             print(f"Email verification failed: {e}")
