@@ -4,7 +4,7 @@ pydantic==2.5.3
 python-dotenv==1.0.0
 requests==2.31.0
 beautifulsoup4==4.12.2
-pandas==2.1.4
+pandas
 numpy==1.26.3
 dnspython==2.4.2
 validate-email-address==1
