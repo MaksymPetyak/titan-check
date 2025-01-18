@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { ReportOverview } from '../types/report';
 import { Loader2 } from 'lucide-react';
 import { Report } from '~/components/ui/Report';
@@ -10,7 +10,7 @@ interface ApiError {
     error: string;
 }
 
-export default function ReportPage() {
+function ReportContent() {
     const searchParams = useSearchParams();
     const [report, setReport] = useState<ReportOverview | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -84,4 +84,18 @@ export default function ReportPage() {
     }
 
     return <Report report={report} />;
+}
+
+export default function ReportPage() {
+    return (
+        <Suspense
+            fallback={
+                <div className="flex-grow flex items-center justify-center">
+                    <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                </div>
+            }
+        >
+            <ReportContent />
+        </Suspense>
+    );
 }
