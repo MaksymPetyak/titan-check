@@ -1,47 +1,48 @@
-from sanctioncheck import check_name, check_company
-from emailcheck import *
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from check_service import CheckService
+from request_parser import BackgroundCheckQueryParser
+from models import CheckResult
+import logging
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-# name_to_check = "Benjamin Berthold Wolba"
-name_to_check = "Abu Abbas"
-company_to_check = "TROPIC TOURS GMBH"
-email = "contact@jonas-geisler.com"
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
+check_service = CheckService()
+request_parser = BackgroundCheckQueryParser()
 
-# Check the name and print results
-#"""
-file_path = "sdn.csv"
-results = check_name(name_to_check, file_path)
-if results:
-    print(f"Matches found for '{name_to_check}':")
-    for result in results:
-        print(f"ID: {result['Record ID']}, Name: {result['Name']}, Description: {result['Description']}")
-else:
-    print(f"No matches found for '{name_to_check}'.")
-#"""
+@app.route('/api/check', methods=['POST'])
+def check():
+    try:
+        logger.info("Received request to /api/check")
+        data = request.get_json()
+        logger.info(f"Request data: {data}")
+        
+        if not data or 'query' not in data:
+            logger.error("No query provided in request")
+            return jsonify({'error': 'No query provided'}), 400
 
-# Check the company name and print results
-"""
-company_results = check_company(company_to_check, file_path)
-if company_results:
-    print(f"Matches found for company '{company_to_check}':")
-    for result in company_results:
-        print(f"ID: {result['Record ID']}, Company: {result['Company']}, Country: {result['Country']}, Description: {result['Description']}")
-else:
-    print(f"No matches found for company '{company_to_check}'.")
-#"""
+        query = data['query']
+        logger.info(f"Processing query: {query}")
+        
+        result = check_service.process_query(query)
+        logger.info(f"Generated result: {result}")
+        
+        response_data = result.model_dump()
+        logger.info(f"Sending response: {response_data}")
+        return jsonify(response_data)
+    except Exception as e:
+        logger.error(f"Error processing request: {str(e)}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
 
-# Check E-Mail 
-#"""
-if __name__ == "__main__":
-    email = "test@getnada.com"  # Replace with the email address you want to verify
-    if verify_email(email):
-        print(f"The email address {email} exists and can receive emails.")
-    else:
-        print(f"The email address {email} does not exist or cannot receive emails.")
+@app.route('/api/healthcheck', methods=['GET'])
+def healthcheck():
+    return jsonify({'status': 'ok'})
 
-    if is_disposable_email(email):
-        print(f"The email address {email} is a disposable email.")
-    else:
-        print(f"The email address {email} is not a disposable email.")
-#"""
+# For local development
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)
 

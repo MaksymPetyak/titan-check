@@ -2,30 +2,38 @@ from typing import Optional, List, Dict, Any
 from pydantic import BaseModel
 
 class LinkedInProfile(BaseModel):
-    name: Optional[str] = None
-    headline: Optional[str] = None
-    current_company: Optional[str] = None
-    location: Optional[str] = None
-    connections: Optional[str] = None
+    name: str | None = None
+    headline: str | None = None
+    current_company: str | None = None
+    location: str | None = None
+    connections: int | None = None
     is_verified: bool = False
 
 class EmailCheckResult(BaseModel):
-    exists: bool = False
-    is_private: bool = False
-    is_disposable: bool = False
+    exists: bool
+    is_private: bool
+    is_disposable: bool
 
 class SanctionMatch(BaseModel):
     Record_ID: str
-    Name: Optional[str] = None
-    Company: Optional[str] = None
-    Country: Optional[str] = None
-    Description: Optional[str] = "No description available"
+    Name: str | None = None
+    Company: str | None = None
+    Country: str | None = None
+    Description: str
 
 class SanctionCheckResult(BaseModel):
-    name_matches: List[SanctionMatch] = []
-    company_matches: List[SanctionMatch] = []
+    name_matches: List[SanctionMatch]
+    company_matches: List[SanctionMatch]
+
+class ExtractedInfo(BaseModel):
+    name: str | None = None
+    linkedin: str | None = None
+    email: str | None = None
+    company: str | None = None
 
 class CheckResult(BaseModel):
-    email_check: Optional[EmailCheckResult] = None
-    sanction_check: Optional[SanctionCheckResult] = None
-    linkedin_profile: Optional[LinkedInProfile] = None 
+    query: str
+    extracted_info: ExtractedInfo
+    linkedin_profile: LinkedInProfile | None = None
+    email_check: EmailCheckResult | None = None
+    sanction_check: SanctionCheckResult | None = None 

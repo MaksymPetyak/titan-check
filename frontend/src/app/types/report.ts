@@ -1,52 +1,42 @@
+export interface LinkedInProfile {
+    name: string;
+    headline: string | null;
+    current_company: string | null;
+    location: string | null;
+    connections: number | null;
+    is_verified: boolean;
+}
 
+export interface EmailCheckResult {
+    exists: boolean;
+    is_disposable: boolean;
+    is_private: boolean;
+}
+
+export interface SanctionMatch {
+    Record_ID: string;
+    Name?: string;
+    Company?: string;
+    Description: string;
+    Country?: string;
+}
+
+export interface SanctionCheckResult {
+    name_matches: SanctionMatch[];
+    company_matches: SanctionMatch[];
+}
+
+export interface ExtractedInfo {
+    name: string | null;
+    linkedin: string | null;
+    email: string | null;
+    company: string | null;
+}
 
 export interface ReportOverview {
     query: string;
-    score: number;
-    summary: string;
-    explanation: string;
-
-    atRiskDatabases: string[];
-
-    linkedInReport: LinkedInCheck;
-    emailReport: EmailCheck;
-    phoneReport: PhoneCheck;
-    instagramReport: InstagramCheck;
-}
-
-interface LinkedInCheck {
-    linkedInUrl: string;
-
-    connections: number; 
-    experience_summary: string;
-}
-
-interface PhoneCheck {
-    score: number;
-    summary: string;
-    explanation: string;
-
-    phoneNumber: string;
-}
-
-interface InstagramCheck {
-    score: number;
-    summary: string;
-    explanation: string;
-}
-
-interface EmailCheck {
-    score: number;
-    summary: string;
-    explanation: string;
-}
-
-interface WatchListMatch {
-    watchlistName: string;
-    description: string;
-    link: string;
-}
-
-type WatchListCheck = {
-    description: string;
+    extracted_info: ExtractedInfo;
+    linkedin_profile: LinkedInProfile | null;
+    email_check: EmailCheckResult | null;
+    sanction_check: SanctionCheckResult | null;
 }

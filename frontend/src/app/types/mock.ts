@@ -1,111 +1,122 @@
+export interface LinkedInProfile {
+    name: string;
+    headline: string | null;
+    current_company: string | null;
+    location: string | null;
+    connections: number | null;
+    is_verified: boolean;
+}
+
+export interface EmailCheckResult {
+    exists: boolean;
+    is_disposable: boolean;
+    is_private: boolean;
+}
+
+export interface SanctionMatch {
+    Record_ID: string;
+    Name?: string;
+    Company?: string;
+    Description: string;
+    Country?: string;
+}
+
+export interface SanctionCheckResult {
+    name_matches: SanctionMatch[];
+    company_matches: SanctionMatch[];
+}
+
+export interface ExtractedInfo {
+    name: string | null;
+    linkedin: string | null;
+    email: string | null;
+    company: string | null;
+}
+
 export const mockReport = {
-    query: "John Smith, john.smith@email.com, LinkedIn: linkedin.com/in/johnsmith, Phone: +1234567890",
-    score: 85,
-    summary: "High Risk Profile",
-    explanation: "Multiple risk indicators found including suspicious business activities and presence on watchlists.",
-
-    atRiskDatabases: [
-        "EU Sanctions List",
-        "OFAC Watchlist",
-        "Financial Fraud Database"
-    ],
-
-    linkedInReport: {
-        linkedInUrl: "linkedin.com/in/johnsmith",
-        connections: 42,
-        experience_summary: "Multiple red flags: Claims C-level positions at companies that cannot be verified. Profile shows inconsistent career timeline."
+    query: "Name: John Doe\nEmail: john.doe@example.com",
+    extracted_info: {
+        name: "John Doe",
+        email: "john.doe@example.com",
+        linkedin: "https://linkedin.com/in/johndoe",
+        company: "Tech Corp"
     },
-
-    emailReport: {
-        score: 65,
-        summary: "Medium Risk",
-        explanation: "Email associated with previously reported investment schemes. Multiple aliases detected."
+    linkedin_profile: {
+        name: "John Doe",
+        headline: "Software Engineer at Tech Corp",
+        current_company: "Tech Corp",
+        location: "San Francisco Bay Area",
+        connections: 500,
+        is_verified: true
     },
-
-    phoneReport: {
-        score: 75,
-        summary: "High Risk",
-        explanation: "Number linked to multiple business fraud reports. Recently flagged in financial scam investigations.",
-        phoneNumber: "+1234567890"
+    email_check: {
+        exists: true,
+        is_disposable: false,
+        is_private: false
     },
-
-    instagramReport: {
-        score: 80,
-        summary: "High Risk",
-        explanation: "Profile uses stolen images from verified businesses. Promotes unregistered investment opportunities."
+    sanction_check: {
+        name_matches: [],
+        company_matches: []
     }
 };
 
 export const mockReportLowRisk = {
-    query: "Sarah Johnson, sarah.j@deloitte.com, LinkedIn: linkedin.com/in/sarahjohnson",
-    score: 15,
-    summary: "Low Risk Profile",
-    explanation: "Verified professional with consistent background. No adverse findings.",
-
-    atRiskDatabases: [],
-
-    linkedInReport: {
-        linkedInUrl: "linkedin.com/in/sarahjohnson",
-        connections: 500,
-        experience_summary: "Verified employment history at Deloitte. Professional certifications confirmed. Active industry participation."
+    query: "Name: Alice Smith\nEmail: alice.smith@company.com",
+    extracted_info: {
+        name: "Alice Smith",
+        email: "alice.smith@company.com",
+        linkedin: "https://linkedin.com/in/alicesmith",
+        company: "Safe Corp"
     },
-
-    emailReport: {
-        score: 10,
-        summary: "Low Risk",
-        explanation: "Corporate email with verified domain. No suspicious activities detected."
+    linkedin_profile: {
+        name: "Alice Smith",
+        headline: "Product Manager at Safe Corp",
+        current_company: "Safe Corp",
+        location: "London, UK",
+        connections: 1000,
+        is_verified: true
     },
-
-    phoneReport: {
-        score: 20,
-        summary: "Low Risk",
-        explanation: "Registered business line with verified corporate connection.",
-        phoneNumber: "+1987654321"
+    email_check: {
+        exists: true,
+        is_disposable: false,
+        is_private: false
     },
-
-    instagramReport: {
-        score: 15,
-        summary: "Low Risk",
-        explanation: "Professional account with verified business connections. Consistent with stated role."
+    sanction_check: {
+        name_matches: [],
+        company_matches: []
     }
 };
 
 export const mockReportHighRisk = {
-    query: "Alex Trading Ltd, invest@quickprofit.com, Phone: +44123456789",
-    score: 95,
-    summary: "Critical Risk Profile",
-    explanation: "Entity found on multiple sanctions lists. Strong indicators of fraudulent activities.",
-
-    atRiskDatabases: [
-        "EU Sanctions List",
-        "OFAC SDN List",
-        "Financial Action Task Force Blacklist",
-        "Interpol Red Notices",
-        "World Bank Debarred Parties"
-    ],
-
-    linkedInReport: {
-        linkedInUrl: "linkedin.com/company/alex-trading",
-        connections: 15,
-        experience_summary: "Company claims cannot be verified. Multiple complaints about fraudulent business practices."
+    query: "Name: Risk Person\nEmail: risk@temp.com",
+    extracted_info: {
+        name: "Risk Person",
+        email: "risk@temp.com",
+        linkedin: null,
+        company: "Risk Corp"
     },
-
-    emailReport: {
-        score: 95,
-        summary: "Critical Risk",
-        explanation: "Domain associated with known fraud schemes. Listed in multiple regulatory warnings."
+    linkedin_profile: null,
+    email_check: {
+        exists: true,
+        is_disposable: true,
+        is_private: true
     },
-
-    phoneReport: {
-        score: 90,
-        summary: "Critical Risk",
-        explanation: "Number linked to multiple reported fraud cases across EU jurisdictions.",
-        phoneNumber: "+44123456789"
-    },
-
-    instagramReport: {
-        score: 100,
-        summary: "Critical Risk",
-        explanation: "Account used in documented investment fraud cases. Subject of regulatory warnings."
+    sanction_check: {
+        name_matches: [
+            {
+                Record_ID: "1",
+                Name: "Risk Person",
+                Description: "Listed for fraudulent activities",
+                Country: "Unknown"
+            }
+        ],
+        company_matches: [
+            {
+                Record_ID: "2",
+                Company: "Risk Corp",
+                Description: "Company under investigation",
+                Country: "Multiple"
+            }
+        ]
     }
 };
