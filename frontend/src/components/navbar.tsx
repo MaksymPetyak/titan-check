@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Shield } from "lucide-react";
 
 export function Navbar() {
   return (
@@ -9,8 +10,9 @@ export function Navbar() {
         <div className="flex h-14 items-center">
           <Link
             href="/"
-            className="text-lg font-medium text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100 transition-colors"
+            className="flex items-center gap-2 text-lg font-medium text-slate-700 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100 transition-colors"
           >
+            <Shield className="h-5 w-5" />
             TitanCheck
           </Link>
         </div>
