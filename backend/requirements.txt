@@ -1,6 +1,6 @@
 flask==3.0.0
 flask-cors==4.0.0
-pydantic==2.5.3
+pydantic
 python-dotenv==1.0.0
 requests==2.31.0
 beautifulsoup4==4.12.2
@@ -10,3 +10,4 @@ dnspython==2.4.2
 validate-email-address==1
 disposable-email-domains==0.0.95
 openai==1.6.1
+mistralai
