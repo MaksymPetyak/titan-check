@@ -1,5 +1,5 @@
 from sanctioncheck import check_name, check_company
-from emailcheck import verify_email
+from emailcheck import *
 
 
 # name_to_check = "Benjamin Berthold Wolba"
@@ -8,7 +8,7 @@ company_to_check = "TROPIC TOURS GMBH"
 email = "contact@jonas-geisler.com"
 
 # Check the name and print results
-"""
+#"""
 file_path = "sdn.csv"
 results = check_name(name_to_check, file_path)
 if results:
@@ -33,9 +33,15 @@ else:
 # Check E-Mail 
 #"""
 if __name__ == "__main__":
-    email = "contact@jonas-geisler.com" 
+    email = "test@getnada.com"  # Replace with the email address you want to verify
     if verify_email(email):
         print(f"The email address {email} exists and can receive emails.")
     else:
-        print(f"The email address {email} does not exist or cannot receive emails.") 
+        print(f"The email address {email} does not exist or cannot receive emails.")
+
+    if is_disposable_email(email):
+        print(f"The email address {email} is a disposable email.")
+    else:
+        print(f"The email address {email} is not a disposable email.")
 #"""
+
