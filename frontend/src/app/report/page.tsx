@@ -2,9 +2,9 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Report } from '~/components/ui/Report';
 import { ReportOverview } from '../types/report';
 import { Loader2 } from 'lucide-react';
+import { Report } from '~/components/ui/Report';
 
 interface ApiError {
     error: string;
