@@ -6,6 +6,7 @@ load_dotenv()
 
 class Settings:
     MISTRAL_API_KEY: str = os.getenv("MISTRAL_API_KEY")
+    RAPID_API_KEY: str = os.getenv("RAPID_API_KEY")
 
 # Create a global settings instance
 settings = Settings()
