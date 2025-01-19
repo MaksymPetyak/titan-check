@@ -4,6 +4,7 @@ from emailcheck import EmailCheckService
 from sanctioncheck import SanctionCheckService
 from linkedin import LinkedInService
 from google_agent import GoogleSearchAgent
+from phone import PhoneService
 from models import CheckResult, SanctionCheckResult, ExtractedInfo
 import logging
 
@@ -16,6 +17,7 @@ class CheckService:
         self.sanction_service = SanctionCheckService()
         self.linkedin_service = LinkedInService()
         self.google_service = GoogleSearchAgent()
+        self.phone_service = PhoneService()
 
     def process_query(self, query: str) -> CheckResult:
         """
@@ -63,6 +65,9 @@ class CheckService:
                 if params.company:
                     search_query += f" {params.company}"
                 result.google_search = self.google_service.search(search_query)
+            
+            if params.phone:
+                result.phone_check = self.phone_service.check_phone(params.phone)
             
             return result
         except Exception as e:

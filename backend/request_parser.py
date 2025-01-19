@@ -8,6 +8,7 @@ class QueryParameters(BaseModel):
     linkedIn: str | None = None
     email: str | None = None
     company: str | None = None
+    phone: str | None = None
 
 
 class BackgroundCheckQueryParser:
@@ -25,6 +26,7 @@ Return a JSON object with the following fields (leave them null if not found):
 - linkedIn: LinkedIn profile URL or username
 - email: email address
 - company: company name or organization
+- phone: phone number
 
 Query: {query}
 

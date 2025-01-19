@@ -13,6 +13,10 @@ export interface EmailCheckResult {
     is_private: boolean;
 }
 
+export interface PhoneCheckResult {
+    phone_number: string;
+}
+
 export interface SanctionMatch {
     Record_ID: string;
     Name?: string;
@@ -43,6 +47,7 @@ export interface ExtractedInfo {
     linkedin: string | null;
     email: string | null;
     company: string | null;
+    phone: string | null;
 }
 
 export interface ReportOverview {
@@ -52,4 +57,5 @@ export interface ReportOverview {
     email_check: EmailCheckResult | null;
     sanction_check: SanctionCheckResult | null;
     google_search: GoogleSearchResponse | null;
+    phone_check: PhoneCheckResult | null;
 }

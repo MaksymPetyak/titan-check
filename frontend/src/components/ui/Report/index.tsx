@@ -7,12 +7,15 @@ import { SanctionCard } from "./SanctionCard";
 import { LinkedInCard } from "./LinkedInCard";
 import { EmailCard } from "./EmailCard";
 import { GoogleSearchCard } from "./GoogleSearchCard";
+import { PhoneCard } from "./PhoneCard";
 
 interface ReportProps {
     report: ReportOverview;
 }
 
 export function Report({ report }: ReportProps) {
+
+    console.log("Report:", report);
     return (
         <div className="w-full max-w-4xl mx-auto space-y-6 p-4">
             {/* Header Section */}
@@ -45,6 +48,11 @@ export function Report({ report }: ReportProps) {
                         email_check={report.email_check}
                         email={report.extracted_info.email}
                     />
+                )}
+
+                {/* Phone Report */}
+                {report.phone_check && (
+                    <PhoneCard phone_check={report.phone_check} />
                 )}
             </div>
 
