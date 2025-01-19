@@ -6,6 +6,8 @@ import { ReportOverview } from '../types/report';
 import { Loader2 } from 'lucide-react';
 import { Report } from '~/components/ui/Report';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000';
+
 interface ApiError {
     error: string;
 }
@@ -65,7 +67,7 @@ function ReportContent() {
         const fetchReport = async () => {
             try {
                 console.log('Sending request with query:', query);
-                const response = await fetch('/api/check', {
+                const response = await fetch(`${API_URL}/api/check`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -73,17 +75,12 @@ function ReportContent() {
                     body: JSON.stringify({ query }),
                 });
 
-                const data = await response.json() as ReportOverview | ApiError;
-
                 if (!response.ok) {
-                    const errorMessage = 'error' in data ? data.error : 'Failed to fetch report';
-                    throw new Error(errorMessage);
+                    const errorText = await response.text();
+                    throw new Error(`API returned ${response.status}: ${errorText}`);
                 }
 
-                if ('error' in data) {
-                    throw new Error(data.error);
-                }
-
+                const data = await response.json() as ReportOverview;
                 console.log('Received report:', data);
                 setReport(data);
             } catch (err) {
