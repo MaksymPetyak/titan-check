@@ -10,6 +10,44 @@ interface ApiError {
     error: string;
 }
 
+const loadingMessages = [
+    "Checking LinkedIn profile...",
+    "Googling additional information...",
+    "Checking email address...",
+    "Scanning sanction lists...",
+    "Verifying phone number...",
+    "Analyzing web presence...",
+    "Gathering insights..."
+];
+
+function LoadingSpinner() {
+    const [messageIndex, setMessageIndex] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMessageIndex((current) => {
+                // Stop at the last message
+                if (current < loadingMessages.length - 1) {
+                    return current + 1;
+                }
+                clearInterval(interval);
+                return current;
+            });
+        }, 2000); // Change message every 2 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <div className="flex-grow flex flex-col items-center justify-center gap-4">
+            <Loader2 className="h-16 w-16 animate-spin text-primary text-gray-600" />
+            <p className="text-lg text-muted-foreground animate-pulse">
+                {loadingMessages[messageIndex]}
+            </p>
+        </div>
+    );
+}
+
 function ReportContent() {
     const searchParams = useSearchParams();
     const [report, setReport] = useState<ReportOverview | null>(null);
@@ -60,11 +98,7 @@ function ReportContent() {
     }, [searchParams]);
 
     if (loading) {
-        return (
-            <div className="flex-grow flex items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     if (error) {
