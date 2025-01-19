@@ -34,15 +34,15 @@ export default function Home() {
             <Shield className="h-7 w-7" />
             TitanCheck
           </div>
-          <h1 className="text-xl font-medium tracking-tight sm:text-3xl text-center bg-gradient-to-b from-slate-900 to-slate-700 bg-clip-text text-transparent">
-            Verify people you meet online
+          <h1 className="text-lg sm:text-xl font-medium text-gray-700 tracking-tight text-center bg-gradient-to-b from-slate-900 to-slate-700 bg-clip-text text-transparent">
+            Online Profile Checks in Seconds
           </h1>
           <p className="text-sm text-muted-foreground text-center max-w-xl">
             Enter what you know about the person below. <br />
-            You can include emails, LinkedIn, phone number, and more.
+            You can include the email, LinkedIn, phone number, and more.
           </p>
           <div className="w-full max-w-lg space-y-4">
-            <div className="flex gap-2 items-center">
+            <div className="flex flex-col sm:flex-row gap-2 items-center">
               <AutosizeTextarea
                 placeholder="Enter or paste details about the person"
                 className="resize-none"
