@@ -12,3 +12,4 @@ disposable-email-domains==0.0.95
 openai==1.6.1
 gunicorn
 mistralai
+haystack-ai

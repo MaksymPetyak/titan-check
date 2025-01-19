@@ -25,6 +25,16 @@ class SanctionCheckResult(BaseModel):
     name_matches: List[SanctionMatch]
     company_matches: List[SanctionMatch]
 
+class GoogleSearchResult(BaseModel):
+    title: str
+    link: str
+    snippet: str
+
+class GoogleSearchResponse(BaseModel):
+    results: List[GoogleSearchResult]
+    query: str
+    summary: str | None = None
+
 class ExtractedInfo(BaseModel):
     name: str | None = None
     linkedin: str | None = None
@@ -36,4 +46,5 @@ class CheckResult(BaseModel):
     extracted_info: ExtractedInfo
     linkedin_profile: LinkedInProfile | None = None
     email_check: EmailCheckResult | None = None
-    sanction_check: SanctionCheckResult | None = None 
+    sanction_check: SanctionCheckResult | None = None
+    google_search: GoogleSearchResponse | None = None 

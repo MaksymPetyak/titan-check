@@ -6,6 +6,7 @@ import { Header } from "./Header";
 import { SanctionCard } from "./SanctionCard";
 import { LinkedInCard } from "./LinkedInCard";
 import { EmailCard } from "./EmailCard";
+import { GoogleSearchCard } from "./GoogleSearchCard";
 
 interface ReportProps {
     report: ReportOverview;
@@ -13,7 +14,7 @@ interface ReportProps {
 
 export function Report({ report }: ReportProps) {
     return (
-        <div className="w-full max-w-4xl mx-auto space-y-2 p-4">
+        <div className="w-full max-w-4xl mx-auto space-y-6 p-4">
             {/* Header Section */}
             <div className="space-y-4">
                 <div className="flex items-start justify-between">
@@ -46,6 +47,13 @@ export function Report({ report }: ReportProps) {
                     />
                 )}
             </div>
+
+            {/* Google Search Section - Full Width */}
+            {report.google_search && (
+                <div className="mt-6">
+                    <GoogleSearchCard data={report.google_search} />
+                </div>
+            )}
         </div>
     );
 } 

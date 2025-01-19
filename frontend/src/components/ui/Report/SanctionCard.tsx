@@ -22,10 +22,10 @@ export function SanctionCard({ sanction_check }: SanctionCardProps) {
                 ) : (
                     <AlertCircle className="h-5 w-5 text-red-700" />
                 )}
-                <h2 className="font-medium">Sanction List Check</h2>
+                <h2 className="font-medium text-slate-800">Sanction List Check</h2>
             </div>
             {hasNoSanctionMatches ? (
-                <p className="text-sm text-green-700">No matches found in sanction lists. This is a positive signal.</p>
+                <p className="text-sm text-green-700">No matches found in sanction lists.</p>
             ) : (
                 <div className="space-y-4">
                     {sanction_check.name_matches.map((match) => (

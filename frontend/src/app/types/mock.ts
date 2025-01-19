@@ -26,6 +26,18 @@ export interface SanctionCheckResult {
     company_matches: SanctionMatch[];
 }
 
+export interface GoogleSearchResult {
+    title: string;
+    link: string;
+    snippet: string;
+}
+
+export interface GoogleSearchResponse {
+    results: GoogleSearchResult[];
+    query: string;
+    summary: string | null;
+}
+
 export interface ExtractedInfo {
     name: string | null;
     linkedin: string | null;
@@ -57,6 +69,22 @@ export const mockReport = {
     sanction_check: {
         name_matches: [],
         company_matches: []
+    },
+    google_search: {
+        query: "John Doe Tech Corp",
+        results: [
+            {
+                title: "John Doe - Software Engineer - Tech Corp | LinkedIn",
+                link: "https://www.linkedin.com/in/johndoe",
+                snippet: "John Doe is a Software Engineer at Tech Corp with over 10 years of experience in full-stack development..."
+            },
+            {
+                title: "Tech Corp Engineering Blog - Building Scalable Systems by John Doe",
+                link: "https://blog.techcorp.com/authors/john-doe",
+                snippet: "Articles and technical insights from John Doe, Principal Engineer at Tech Corp..."
+            }
+        ],
+        summary: "John Doe is an experienced software engineer currently working at Tech Corp. He has over 10 years of experience in full-stack development and is known for his contributions to scalable system architecture. He regularly shares technical insights through the company's engineering blog."
     }
 };
 
@@ -84,6 +112,17 @@ export const mockReportLowRisk = {
     sanction_check: {
         name_matches: [],
         company_matches: []
+    },
+    google_search: {
+        query: "Alice Smith Safe Corp",
+        results: [
+            {
+                title: "Alice Smith - Product Manager - Safe Corp | LinkedIn",
+                link: "https://www.linkedin.com/in/alicesmith",
+                snippet: "Alice Smith is a Product Manager at Safe Corp, leading innovative product initiatives..."
+            }
+        ],
+        summary: "Alice Smith is a Product Manager at Safe Corp with a strong track record in product development and team leadership. She has contributed to several successful product launches and is well-regarded in the industry for her innovative approach to product management."
     }
 };
 
@@ -118,5 +157,16 @@ export const mockReportHighRisk = {
                 Country: "Multiple"
             }
         ]
+    },
+    google_search: {
+        query: "Risk Person Risk Corp",
+        results: [
+            {
+                title: "Risk Corp Investigation - Financial Times",
+                link: "https://ft.com/risk-corp-investigation",
+                snippet: "Risk Corp and its executives, including Risk Person, are under investigation for alleged financial misconduct..."
+            }
+        ],
+        summary: "Multiple sources indicate Risk Person has been involved in concerning activities. They are currently under investigation along with Risk Corp for alleged financial misconduct. Several news reports highlight questionable business practices and ongoing legal scrutiny."
     }
 };

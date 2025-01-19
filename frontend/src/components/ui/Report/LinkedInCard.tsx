@@ -2,7 +2,7 @@
 
 import { Card } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
-import { Linkedin } from "lucide-react";
+import { Linkedin, Building2, MapPin, Users } from "lucide-react";
 import { LinkedInProfile } from "~/app/types/report";
 import Link from "next/link";
 
@@ -16,7 +16,7 @@ export function LinkedInCard({ linkedin_profile, linkedin_url }: LinkedInCardPro
         <Card className="p-6">
             <div className="flex items-center gap-2 mb-4">
                 <Linkedin className="h-5 w-5 text-blue-600" />
-                <h2 className="font-medium">LinkedIn Profile</h2>
+                <h2 className="font-medium text-slate-800">LinkedIn Profile</h2>
                 {linkedin_profile.is_verified && (
                     <Badge variant="outline" className="ml-auto border-green-500/50 text-green-700">
                         Verified
@@ -39,13 +39,22 @@ export function LinkedInCard({ linkedin_profile, linkedin_url }: LinkedInCardPro
                 <p className="font-medium">{linkedin_profile.name}</p>
                 <p className="text-sm text-muted-foreground">{linkedin_profile.headline}</p>
                 {linkedin_profile.current_company && (
-                    <p className="text-sm">Company: {linkedin_profile.current_company}</p>
+                    <div className="flex items-center gap-2 text-sm">
+                        <Building2 className="h-4 w-4 text-slate-600" />
+                        <span>{linkedin_profile.current_company}</span>
+                    </div>
                 )}
                 {linkedin_profile.location && (
-                    <p className="text-sm">Location: {linkedin_profile.location}</p>
+                    <div className="flex items-center gap-2 text-sm">
+                        <MapPin className="h-4 w-4 text-slate-600" />
+                        <span>{linkedin_profile.location}</span>
+                    </div>
                 )}
                 {linkedin_profile.connections && (
-                    <p className="text-sm">Connections: {linkedin_profile.connections}</p>
+                    <div className="flex items-center gap-2 text-sm">
+                        <Users className="h-4 w-4 text-slate-600" />
+                        <span>{linkedin_profile.connections} connections</span>
+                    </div>
                 )}
             </div>
         </Card>

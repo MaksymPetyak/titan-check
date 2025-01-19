@@ -26,6 +26,18 @@ export interface SanctionCheckResult {
     company_matches: SanctionMatch[];
 }
 
+export interface GoogleSearchResult {
+    title: string;
+    link: string;
+    snippet: string;
+}
+
+export interface GoogleSearchResponse {
+    results: GoogleSearchResult[];
+    query: string;
+    summary: string | null;
+}
+
 export interface ExtractedInfo {
     name: string | null;
     linkedin: string | null;
@@ -39,4 +51,5 @@ export interface ReportOverview {
     linkedin_profile: LinkedInProfile | null;
     email_check: EmailCheckResult | null;
     sanction_check: SanctionCheckResult | null;
+    google_search: GoogleSearchResponse | null;
 }

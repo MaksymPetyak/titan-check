@@ -3,7 +3,8 @@ from request_parser import BackgroundCheckQueryParser, QueryParameters
 from emailcheck import EmailCheckService
 from sanctioncheck import SanctionCheckService
 from linkedin import LinkedInService
-from models import CheckResult, EmailCheckResult, SanctionCheckResult, LinkedInProfile, ExtractedInfo
+from google_agent import GoogleSearchAgent
+from models import CheckResult, SanctionCheckResult, ExtractedInfo
 import logging
 
 logger = logging.getLogger(__name__)
@@ -14,6 +15,7 @@ class CheckService:
         self.email_service = EmailCheckService()
         self.sanction_service = SanctionCheckService()
         self.linkedin_service = LinkedInService()
+        self.google_service = GoogleSearchAgent()
 
     def process_query(self, query: str) -> CheckResult:
         """
@@ -54,6 +56,13 @@ class CheckService:
             # Run LinkedIn checks if LinkedIn profile is provided
             if params.linkedIn:
                 result.linkedin_profile = self.linkedin_service.get_profile_data(params.linkedIn)
+            
+            # Run Google search if name is provided
+            if params.name:
+                search_query = f"{params.name}"
+                if params.company:
+                    search_query += f" {params.company}"
+                result.google_search = self.google_service.search(search_query)
             
             return result
         except Exception as e:
