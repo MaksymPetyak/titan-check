@@ -13,3 +13,4 @@ openai==1.6.1
 gunicorn
 mistralai
 haystack-ai
+trafilatura
